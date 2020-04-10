@@ -143,7 +143,7 @@ describe "Initiative", type: :system do
         end
 
         it "doesn't displays no signature checkbox" do
-          expect(page).not_to have_unchecked_field("No signature 2")
+          expect(page).not_to have_unchecked_field("No signature")
         end
 
         it "Information collected in previous steps is already filled" do
