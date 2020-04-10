@@ -1,6 +1,9 @@
 ---
 fr:
   activemodel:
+    attributes:
+      initiative:
+        no_signature: No signature
     errors:
       models:
         initiatives:
