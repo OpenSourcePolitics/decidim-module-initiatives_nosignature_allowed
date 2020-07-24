@@ -14,6 +14,7 @@ module Decidim
       attribute :scope_id, Integer
       attribute :decidim_user_group_id, Integer
       attribute :signature_type, String
+      attribute :signature_end_date, Date
       attribute :state, String
       attribute :no_signature, Boolean
 
@@ -22,6 +23,9 @@ module Decidim
       validates :signature_type, presence: true
       validates :type_id, presence: true
       validate :scope_exists
+      validates :signature_end_date, date: { after: Date.current }, if: lambda { |form|
+        type.custom_signature_end_date_enabled? && form.signature_end_date.present?
+      }
       validate :check_no_signature
 
       def map_model(model)

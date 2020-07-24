@@ -19,6 +19,10 @@ module Decidim
         # root to: "initiatives_no_signature_allowed#index"
       end
 
+      initializer "admin_decidim_initiatives_no_signature_allowed.assets" do |app|
+        app.config.assets.precompile += %w(admin_decidim_initiatives_no_signature_allowed_manifest.js)
+      end
+
       def load_seed
         nil
       end

@@ -61,6 +61,12 @@
               </div>
             <% end %>
 
+            <% if initiative_type.custom_signature_end_date_enabled? %>
+              <div class="field signature-end-date">
+                <%= f.date_field :signature_end_date %>
+              </div>
+            <% end %>
+
             <% if Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
               <div class="field">
                 <%= f.select :decidim_user_group_id,
@@ -77,3 +83,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_include_tag "decidim/initiatives_no_signature_allowed/end_date.js" %>

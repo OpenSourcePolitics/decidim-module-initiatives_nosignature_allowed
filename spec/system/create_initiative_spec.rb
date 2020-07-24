@@ -171,6 +171,44 @@ describe "Initiative", type: :system do
             expect(find(:xpath, "//input[@id='initiative_signature_type']", visible: false).value).to eq("offline")
           end
         end
+
+        context "when the initiative type does not enable custom signature end date" do
+          it "does not show the signature end date" do
+            expect(page).not_to have_content("End of signature collection period")
+          end
+        end
+
+        context "when the initiative type enables custom signature end date" do
+          let(:initiative_type) { create(:initiatives_type, :custom_signature_end_date_enabled, organization: organization, minimum_committee_members: initiative_type_minimum_committee_members, signature_type: "offline") }
+
+          it "shows the signature end date" do
+            expect(page).to have_content("End of signature collection period")
+          end
+        end
+
+        context "when custom signature end date enabled and no signature is selected" do
+          let(:initiative_type) { create(:initiatives_type, :no_signature_allowed, :custom_signature_end_date_enabled, organization: organization) }
+
+          it "hides the signature end date" do
+            check("No signature")
+
+            expect(page).not_to have_content("End of signature collection period")
+          end
+        end
+
+        context "when custom signature end date enabled and no signature is deselected" do
+          let(:initiative_type) { create(:initiatives_type, :no_signature_allowed, :custom_signature_end_date_enabled, organization: organization) }
+
+          before do
+            check("No signature")
+          end
+
+          it "hides the signature end date" do
+            uncheck("No signature")
+
+            expect(page).to have_content("End of signature collection period")
+          end
+        end
       end
 
       context "when Promotal committee" do
