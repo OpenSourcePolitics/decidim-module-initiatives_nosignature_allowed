@@ -84,7 +84,6 @@ module Decidim
 
       def promotal_committee_step(parameters)
         @form = build_form(Decidim::Initiatives::InitiativeForm, parameters)
-
         unless @form.valid?
           redirect_to previous_wizard_path(validate_form: true)
           return
